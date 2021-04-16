@@ -1,0 +1,62 @@
+.form {
+  /* padding-left: 100px;
+  padding-right: 100px; */
+  background-color: rgba(0, 0, 0, 0.842);
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #000;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 500px;
+  height: 575px;
+}
+
+.form-box .header-text {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+label {
+  color: burlywood;
+}
+
+button {
+  width: 411px;
+}
+
+.but {
+  /* margin-left: 200px; */
+  /* margin-bottom: 300px; */
+  margin-top: 50px;
+  text-align: center;
+}
+
+.bttn {
+  width: 100px;
+}
+
+.back {
+  background-color: #171c21;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+}
+
+.acc {
+  font-family: "Playfair Display", serif;
+
+  font-size: 30px;
+}

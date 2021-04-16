@@ -1,0 +1,189 @@
+{% extends 'ProSoccerPredictor/base.html' %}
+{% block content %}
+{% load static %} 
+<link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button style="background-color:Gainsboro" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Analysing players on the basis of preferred foot (Right or Left)
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <img src="data:image/png;base64,{{ data1 }}" alt="" height="350" ,width="350"></div>
+              </div>
+            </div>
+
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Analysis based on different player positions
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  
+                  <img src="data:image/png;base64,{{ data2 }}" alt="" height="350" ,width="350">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                  <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Analysis based on Work rate of the players
+                  </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    
+                    <img src="data:image/png;base64,{{ data3 }}" alt="" height="350" ,width="350">
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                  <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Analysis based on skill moves of Players
+                  </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    
+                    <img src="data:image/png;base64,{{ data4 }}" alt="" height="350" ,width="350">
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                  <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    Analysis based on body weight of the players
+                  </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <img src="data:image/png;base64,{{ data5 }}" alt="" height="300" ,width="300">
+                  </div>
+                </div>
+              </div>
+       
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                  <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                    Analysis based on potential scores of the players
+                  </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">           
+                    <img src="data:image/png;base64,{{ data6 }}" alt="" height="400" ,width="400"> 
+                  </div>
+                </div>
+              </div>
+              
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSeven">
+                  <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                      Analysing ball control and dribbling attributes of left-footed and right-footed footballers
+                  </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingseven" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <img src="data:image/png;base64,{{ data7 }}" alt="" height="450" ,width="450"> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+              <h2 class="accordion-header" id="headingEight">
+                <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                  Analysing players on the basis of Height
+                </button>
+              </h2>
+              <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <img src="data:image/png;base64,{{ data9 }}" alt="" height="500" ,width="500"> 
+                </div>
+              </div>
+            </div> 
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingNine">
+                <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                  Best players according to their respective positions
+                </button>
+              </h2>
+              <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <img src="{% static 'img/bestplayers.png' %}" alt="" height="500" ,width="350"> 
+                </div>
+              </div>
+            </div>
+            
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEleven">
+                  <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEleven" aria-expanded="false" aria-controls="collapseEleven">
+                    Analysis based on overall scores of the players
+                  </button>
+                </h2>
+                <div id="collapseEleven" class="accordion-collapse collapse" aria-labelledby="headingEleven" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">           
+                    <img src="data:image/png;base64,{{ data11 }}" alt="" height="400" ,width="400"> 
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwelve">
+                  <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwelve" aria-expanded="false" aria-controls="collapseTwelve">
+                    Analysing players on the basis of Age
+                  </button>
+                </h2>
+                <div id="collapseTwelve" class="accordion-collapse collapse" aria-labelledby="headingTwelve" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <img src="data:image/png;base64,{{ data10 }}" alt="" height="450" ,width="450"> 
+                  </div>
+                </div>
+              </div> 
+                             
+              <div class="accordion-item">
+              <class="accordion-item">
+              <h2 class="accordion-header" id="headingThirteen">
+                <button style="background-color:Beige" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThirteen" aria-expanded="false" aria-controls="collapseThirteen">
+                  Top 10 right-footed players
+                </button>
+              </h2>
+              <div id="collapseThirteen" class="accordion-collapse collapse" aria-labelledby="headingThirteen" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <img src="{% static 'img/right.png' %}" alt="" height="250" ,width="250"> 
+                </div>
+              </div>
+            </class=> 
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFourteen">
+                <button style="background-color:Gainsboro" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFourteen" aria-expanded="false" aria-controls="collapseFourteen">
+                  Top 10 left-footed players
+                </button>
+              </h2>
+              <div id="collapseFourteen" class="accordion-collapse collapse" aria-labelledby="headingFourteen" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <img src="{% static 'img/left.png' %}" alt="" height="250" ,width="250"> 
+                </div>
+              </div>
+            </div> 
+
+
+          </div>  
+
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+{% endblock content %}

@@ -1,0 +1,46 @@
+{% extends 'ProSoccerPredictor/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+
+<body style="background:url('https://img.17qq.com/images/hmkhcmmhcpv.jpeg')  no-repeat;
+    background-size: cover;">
+
+  <div class="form-box">
+
+    <form method = "post" action = ""> 
+      {% csrf_token %} 
+      <div class="header-text">
+        <font face="Calibri">Account Credentials</font>
+      </div>
+      <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Username" required>
+        </div>
+        <!-- <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email" required>
+        </div> -->
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-lg btn-dark btn-block">Submit</button>
+        </div>
+        <div class="d-flex justify-content-center links">
+          <font color="#ffffff">Don't have an account? <a href="{% url 'soccer-register' %}" class="ml-2">Register</a></font>
+        </div>
+      </div>
+    </form>
+
+  <div class="d-flex justify-content-center">
+    {% for message in messages %}
+	    <h5 id="messages">{{message}}</h5>
+  {% endfor %}    
+  </div>
+    
+</div> 
+
+{% endblock content %}

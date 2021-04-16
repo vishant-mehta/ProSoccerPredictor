@@ -1,0 +1,179 @@
+{% extends 'ProSoccerPredictor/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'stats.css' %}">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="container">
+  
+  <form action="{% url 'soccer-stats' %}" method="get" autocomplete="off">
+    {% csrf_token %}
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+          <form class="card card-sm">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col-auto mr-2">
+                    <i class="fas fa-search h4 text-body"></i>
+                </div>
+                  <!--end of col-->
+                <div class="col mr-3" class="autocomplete">
+                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search Players" name="query" id="query">
+                </div>
+                  <!--end of col-->
+                <div class="col-auto">
+                    <button class="btn btn-lg btn-success" type="submit">Search</button>
+                </div>
+                  <!--end of col-->
+            </div>
+          </form>
+      </div>
+    </div>
+    
+  </form>
+
+    {% if request.GET.query %}
+    <div class="form-box">
+    
+      <ul>         
+          {% for player in search %}
+            <center><h2><b>{{ player.name }}</b></h2></center>
+
+            
+          <li>
+              Age: {{ player.age }}
+          </li>
+          <li>
+              Club: {{ player.club }}
+          </li>
+          <li>
+              Jersey: {{ player.number }}
+          </li>
+          <li>
+              Wage: {{ player.wage }}
+          </li>
+          <li>
+              Overall: {{ player.overall }}
+          </li>
+          <li>
+              Position: {{ player.position }}
+          </li>
+          <li>
+              Preferred Foot: {{ player.foot }}
+          </li>
+          <li>
+            Height: {{ player.height }}
+          </li>
+          <li>
+          Weight: {{ player.weight }}
+          </li>
+          {% endfor %}
+      </ul>
+    </div>
+    
+    {% endif %}
+
+
+</div>
+
+ <script>
+
+  function autocomplete(inp, arr) {
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    var currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        /*create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+        /*for each item in the array...*/
+        for (i = 0; i < arr.length; i++) {
+          /*check if the item starts with the same letters as the text field value:*/
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV");
+            /*make the matching letters bold:*/
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+    });
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+          currentFocus++;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 38) { //up
+          /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+          currentFocus--;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          /*If the ENTER key is pressed, prevent the form from being submitted,*/
+          e.preventDefault();
+          if (currentFocus > -1) {
+            /*and simulate a click on the "active" item:*/
+            if (x) x[currentFocus].click();
+          }
+        }
+    });
+  
+    function removeActive(x) {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+    function closeAllLists(elmnt) {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+  }
+  var names=JSON.parse("{{playernames|escapejs}}");
+  
+  /* var names = ['L. Messi', 'Cristiano Ronaldo', 'Neymar Jr', 'De Gea', 'K. De Bruyne', 'E. Hazard', 'L. Modrić', 'L. Suárez', 'Sergio Ramos', 'J. Oblak', 'R. Lewandowski', 'T. Kroos', 'D. Godín', 'David Silva', 'N. Kanté', 'P. Dybala', 'H. Kane', 'A. Griezmann', 'M. ter Stegen', 'T. Courtois', 'Sergio Busquets', 'E. Cavani', 'M. Neuer', 'S. Agüero', 'G. Chiellini', 'K. Mbappé', 'M. Salah', 'Casemiro', 'J. Rodríguez', 'L. Insigne', 'Isco', 'C. Eriksen', 'Coutinho', 'P. Aubameyang', 'M. Hummels', 'Marcelo', 'G. Bale', 'H. Lloris', 'G. Higuaín', 'Thiago Silva', 'S. Handanovič', 'G. Buffon', 'S. Umtiti', 'M. Icardi', 'K. Koulibaly', 'P. Pogba', 'K. Navas', 'R. Lukaku', 'C. Immobile', 'Jordi Alba', 'D. Mertens', 'J. Vertonghen', 'M. Hamšík', 'I. Rakitić', 'Piqué', 'L. Sané', 'Bernardo Silva', 'Ederson', 'S. Mané', 'V. van Dijk', 'R. Sterling', 'Roberto Firmino', 'R. Varane', 'M. Verratti', 'Alex Sandro', 'Douglas Costa', 'T. Müller', 'Thiago', 'M. Reus', 'Azpilicueta', 'L. Bonucci', 'T. Alderweireld', 'M. Pjanić', 'M. Benatia', 'M. Özil', 'Fernandinho', 'Iniesta', 'M. Škriniar', 'S. Milinković-Savić', 'Marco Asensio', 'N. Fekir', 'Alisson', 'J. Kimmich', 'Saúl', 'R. Mahrez', 'D. Alaba', 'Koke', 'A. Lacazette', 'K. Manolas', 'N. Otamendi', 'Parejo', 'Paulinho', 'W. Szczęsny', 'A. Sánchez', 'Y. Brahimi', 'J. Boateng', 'A. Vidal', 'I. Perišić', 'E. Džeko', 'S. Khedira', 'Diego Costa', 'R. Nainggolan', 'Naldo', 'B. Matuidi', 'Miranda', 'K. Benzema', 'Filipe Luís', 'V. Kompany', 'Pepe', 'Z. Ibrahimović', 'D. Sánchez', 'J. Giménez', 'Alex Telles', 'A. Laporte', 'Bruno Fernandes', 'N. Süle', 'A. Martial', 'D. Alli', 'Fabinho', 'Marquinhos', 'William Carvalho', 'Jorginho', 'F. Thauvin', 'Carvajal', 'M. Depay', 'H. Son', 'A. Lopes', 'S. de Vrij', 'M. Perin', 'J. Cuadrado', 'Iago Aspas', 'B. Leno', 'N. Matić', 'L. Hrádecký', 'Illarramendi', 'K. Walker', 'I. Gündoğan', 'José Callejón', 'A. Di María', 'M. Mandžukić', 'Willian', 'Sergio Asenjo', 'E. Banega', 'A. Witsel', 'D. Payet', 'Jonas', 'Sokratis', 'S. Ruffier', 'Falcao', 'K. Schmeichel', 'Raúl Albiol', 'A. Gómez', 'A. Barzagli', 'Quaresma', 'A. Robben', 'O. Dembélé', 'Gabriel Jesus', 'Ronaldo Cabrais', 'Josué Chiamulera', 'Louri Beretta', 'P. Kimpembe', 'N. Keïta', 'C. Tolisso', 'T. Lemar', 'K. Coman', 'J. Tah', 'Anderson Talisca', 'T. Werner', 'A. Rabiot', 'L. Goretzka', 'Q. Promes', 'H. Ziyech', 'Lucas Vázquez', 'Y. Carrasco', 'Gerard Moreno', 'Felipe', 'M. Kovačić', 'Kepa', 'Manu Trigueros', 'S. Gnabry', 'J. Pickford', 'S. Savić', 'J. Stones', 'Suso', 'J. Draxler', 'Felipe Anderson', 'Lucas Moura', 'Danilo Pereira', 'Nacho Fernández', 'T. Horn', 'Allan', 'F. Acerbi', 'Sergi Roberto', 'Rodrigo', 'Pizzi', 'K. Kampl', 'Neto', 'O. Baumann', 'I. Gueye', 'H. Mkhitaryan', 'Marcos Alonso', 'D. Subašić', 'K. Glik', 'K. Strootman', 'B. Dost', 'Oscar', 'M. Balotelli', 'Luiz Gustavo', 'Giuliano', 'David Luiz', 'R. Fährmann', 'Juan Mata', 'Adán', 'Rui Patrício', 'Y. Sommer', 'Javi Martínez', 'L. Bender', 'Lucas Leiva', 'S. Mandanda', 'Cesc Fàbregas', 'M. Dembélé', 'F. Ribéry', 'R. Jarstein', 'D. De Rossi', 'Pepe Reina', 'J. Pavlenka', 'M. de Ligt', 'Rodri', 'Arthur', 'G. Donnarumma', 'Rosberto Dourado', 'Juiano Mestres', 'Raphaelito Anjos', 'Gelson Martins', 'Gonçalo Guedes', 'L. Torreira', 'Malcom', 'Pau López', 'L. Hernández', 'C. Lenglet', 'A. Kramarić', 'A. Robertson', 'Dani García', 'F. Bernardeschi', 'J. Brandt', 'D. Rugani', 'Samu Castillejo', 'João Cancelo', 'A. Romagnoli', 'T. Partey', 'Fred', 'J. Vardy', 'A. Belotti', 'E. Forsberg', 'J. Lingard', 'F. Vázquez', 'E. Višća', 'A. Rüdiger', 'A. Florenzi', 'H. Maguire', 'T. Meunier', 'S. Sané', 'G. Kondogbia', 'Rafinha', 'Gabriel Paulista', 'Morata', 'J. Cillessen', 'W. Ben Yedder', 'C. Bakambu', 'Pablo Sarabia', 'W. Zaha', 'Luis Alberto', 'Jonathan Viera', 'Bartra', 'S. Coates', 'Willian José', 'Mário Fernandes', 'Víctor Ruiz', 'T. Delaney', 'K. Casteels', 'M. Götze', 'S. Mustafi', 'J. Pastore', 'Pedro', 'G. Bonaventura', 'R. Bürki', 'Taison', 'S. Nzonzi', 'Marlos', 'A. Ramsey', 'K. Trippier', 'A. Kolarov', 'G. Sigurðsson', 'S. Giovinco', 'M. Arnautović', 'N. Gaitán', 'J. Henderson', 'M. Kruse', 'M. Parolo', 'L. Fejsa', 'A. Rami', 'V. Ćorluka', 'G. Wijnaldum', 'F. Fazio', 'O. Giroud', 'Marcano', 'A. Guardado', 'E. Garay', 'Jardel', 'S. Sirigu', 'E. Viviano', 'L. Koscielny', 'A. Consigli', 'L. Biglia', 'Dani Alves', 'David Villa', 'Aduriz', 'P. Čech', 'Casillas', 'M. Rashford', 'Laure Santeiro', 'L. Bailey', 'M. Akanji', 'F. de Jong', 'Nélson Semedo', 'Pablo Fornals', 'Fabián', 'E. Bailly', 'Dani Ceballos', 'H. Lozano', 'Morales', 'J. Seri', 'M. Politano', 'M. Brozović', 'Williams', 'A. Correa', 'A. Christensen', 'João Mário', 'T. Strakosha', 'E. Hysaj', 'P. Zieliński', 'Ricardo Pereira', 'Grimaldo', 'R. Guerreiro', 'A. Doucouré', 'J. Martínez', 'C. Bacca', 'A. Plea', 'B. Davies', 'M. Nastasić', 'A. Milik', 'M. Sabitzer', 'B. Mendy', 'C. Kramer', 'S. Vrsaljko', 'T. Hazard', 'K. Bellarabi', 'S. Zaza', 'F. Ghoulam', 'B. Lecomte', 'J. Iličić', 'K. Volland', 'Paco Alcácer', 'Vitolo', 'G. Xhaka', 'D. Tadić', 'C. Aránguiz', 'S. Verdi', 'D. Lovren', 'G. Medel', 'X. Shaqiri', 'J. Corona', 'A. Areola', 'K. Vogt', 'Ander Herrera', 'E. Salvio', 'S. El Shaarawy', 'C. Smalling', 'Hulk', 'S. Kagawa', 'M. Lanzini', 'F. Smolov', 'L. Stindl', 'O. Toprak', 'D. Perotti', 'F. Muslera', 'B. Höwedes', 'S. Kjær', 'S. Bender', 'M. Valbuena', 'Pedro León', 'K. Boateng', 'L. Piszczek', 'A. Candreva', 'D. Wass', 'E. Lamela', 'D. Rose', 'C. Vela', 'Renato Augusto', 'A. Valencia', 'L. Fabiański', 'João Moutinho', 'Borja Valero', 'F. Quagliarella', 'B. Gomis', 'Manuel Fernandes', 'H. Herrera', 'Raffael', 'Nani', 'J. Milner', 'J. Mathieu', 'Joaquín', 'M. Gómez', 'K. Havertz', 'T. Ndombele', 'H. Aouar', 'Carlos Soler', 'Odriozola', 'M. Almirón', 'Welington Dano', 'Everton Andrão', 'Oyarzabal', 'F. Balbuena', 'M. Marega', 'B. Pavard', 'W. Ndidi', 'A. Onana', 'G. Lo Celso', 'M. Acuña', 'Rúben Neves', 'Mariano', 'Raúl', 'M. Caldara', 'M. Vecino', 'T. Bakayoko', 'M. Dahoud', 'Rafa', 'K. Baldé', 'G. Rulli', 'F. Armani', 'Rony Lopes', 'Santi Mina', 'K. Demirbay', 'Gayà', 'André Gomes', 'N. Tagliafico', 'M. Sanson', 'Pacheco', 'E. Can', 'H. Çalhanoğlu', 'M. Ginter', 'M. Keane', 'L. Paredes', 'T. Stepanenko', 'L. Shaw', 'Z. Feddal', 'S. Haller', 'Bernard', 'T. Inui', 'Portu', 'M. Batshuayi', 'E. Zahavi', 'T. Vaclík', 'N. Pope', 'Héctor Bellerín', 'P. Kadeřábek', 'J. Butland', 'J. Vestergaard', 'J. Tarkowski', 'Deulofeu', 'E. Dier', 'J. Murillo', 'M. Badelj', 'Ismaily', 'N. Schulz', 'L. Digne', 'M. Uth', 'Cristian Tello', 'D. Vida', 'L. Muriel', 'V. Aboubakar', 'A. Oxlade-Chamberlain', 'S. Aurier', 'J. Matip', 'Y. Rakitskyi', 'Sergi Enrich', 'A. Yarmolenko', 'Hugo Mallo', 'André Almeida', 'D. Didavi', 'R. Rodríguez', 'R. Pereyra', 'Mario Gaspar', 'Maicon', 'D. Blind', 'J. Zoet', 'A. Ljajić', 'Canales', 'Iago Falqué', 'L. de Jong']  
+  /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+  autocomplete(document.getElementById("query"), names);
+  </script>
+
+{% endblock content %}

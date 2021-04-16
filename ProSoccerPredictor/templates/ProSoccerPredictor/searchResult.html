@@ -1,0 +1,17 @@
+{% extends 'ProSoccerPredictor/base.html' %}
+
+{% block content %}
+    <ul>         
+        {% for player in search %}
+        <li>
+          Name: {{ player.name }}
+        </li>
+        <li>
+            Age: {{ player.age }}
+        </li>
+        <li>
+            Club: {{ player.club }}
+        </li>
+        {% endfor %}
+    </ul>   
+{% endblock content %}

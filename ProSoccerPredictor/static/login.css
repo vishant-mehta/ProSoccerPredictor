@@ -1,0 +1,38 @@
+.container {
+  margin-top: 100px;
+}
+
+.form-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #000;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 500px;
+  height: 400px;
+}
+
+.form-box .header-text {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.acc {
+  font-family: "Playfair Display", serif;
+
+  font-size: 30px;
+}
+
+#messages {
+  color: red;
+  padding: 10px;
+  margin-top: 400px;
+}
